@@ -1,0 +1,37 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>de.lostmekka.important-files-idea-plugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Important Files</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="stefan.beyer@3m5.de" url="https://github.com/LostMekka">LostMekka</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Adds functionality for configuring a list of important files that is directly accessible across all projects.<br>
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+                serviceImplementation="de.lostmekka.importantfilesideaplugin.ApplicationSettings"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="de.lostmekka.importantfilesideaplugin.ApplicationSettingsConfigurable"
+                id="de.lostmekka.important-files-idea-plugin.AppSettings"
+                displayName="Important Files"/>
+        <treeStructureProvider
+                implementation="de.lostmekka.importantfilesideaplugin.MyTreeStructureProvider"/>
+    </extensions>
+</idea-plugin>
