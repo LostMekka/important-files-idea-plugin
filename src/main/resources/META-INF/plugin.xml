@@ -14,7 +14,33 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Adds functionality for configuring a list of important files that is directly accessible across all projects.<br>
+    Adds functionality for configuring a list of important files that is directly accessible across all projects.
+    <br>
+    <br>
+
+    After installing the plugin, you can configure the list of important files under
+    Settings -> Tools -> Important Files.
+    All configured files will be directly available in the Project tool window under the "Important Files" Node,
+    similar to the "Scratches and Consoles" node, regardless which project you have open.
+    <br>
+    <br>
+
+    Example use-cases may include:
+    <ul>
+    <li>A markdown file listing which of your projects uses which ports</li>
+    <li>Your SSH config file, if you frequently need to add entries</li>
+    </ul>
+    <br>
+    <br>
+
+    Further development of this plugin will include:
+    <ul>
+    <li>Configurable custom labels for your important files, to keep the view nicely organized</li>
+    <li>Proper sorting in the project view, according to the configured file order</li>
+    <li>Support for whole directories</li>
+    <li>Disable the automatic "Non Project Files Protection" IDE feature for these files</li>
+    <li>Support for configuring files as read-only</li>
+    </ul>
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
