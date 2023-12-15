@@ -7,9 +7,8 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.ToolbarDecorator
+import com.intellij.ui.dsl.builder.Align
 import com.intellij.ui.dsl.builder.panel
-import com.intellij.ui.dsl.gridLayout.HorizontalAlign
-import com.intellij.ui.dsl.gridLayout.VerticalAlign
 import com.intellij.ui.table.TableView
 import com.intellij.util.messages.Topic
 import com.intellij.util.ui.ColumnInfo
@@ -136,8 +135,7 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
     override fun createPanel(): DialogPanel = panel {
         row {
             cell(tableContainer)
-                .horizontalAlign(HorizontalAlign.FILL)
-                .verticalAlign(VerticalAlign.FILL)
+                .align(Align.FILL)
         }
     }
 }
