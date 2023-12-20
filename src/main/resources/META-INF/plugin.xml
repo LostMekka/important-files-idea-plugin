@@ -43,6 +43,21 @@
     </ul>
   ]]></description>
 
+    <change-notes><![CDATA[
+    v0.0.3
+    <ul>
+    <li>Support for IDEA 2023.3</li>
+    <li>IDEA 2022.2 or lower is no longer supported</li>
+    </ul>
+    <br>
+    <br>
+
+    v0.0.2
+    <ul>
+    <li>Initial plugin upload</li>
+    </ul>
+  ]]></change-notes>
+
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
