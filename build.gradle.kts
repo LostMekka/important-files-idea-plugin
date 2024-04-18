@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.lostmekka"
-version = "0.0.3"
+version = "0.0.4"
 
 repositories {
     mavenCentral()
@@ -14,7 +14,7 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2023.3")
+    version.set("2024.1")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf(/* Plugin Dependencies */))
@@ -32,7 +32,6 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("223")
-        untilBuild.set("233.*")
     }
 
     signPlugin {

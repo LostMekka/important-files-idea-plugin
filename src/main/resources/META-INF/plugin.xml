@@ -44,6 +44,13 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    v0.0.4
+    <ul>
+    <li>Support for IDEA 2024.1 and (hopefully) beyond. IDE updates should no longer break the plugin, unless the new IDE version changed something big.</li>
+    </ul>
+    <br>
+    <br>
+
     v0.0.3
     <ul>
     <li>Support for IDEA 2023.3</li>
