@@ -2,6 +2,7 @@ package de.lostmekka.importantfilesideaplugin
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.BoundConfigurable
@@ -27,12 +28,15 @@ object ApplicationSettingsNotifications {
 }
 
 class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
+    private val log = Logger.getInstance(ApplicationSettingsConfigurable::class.java)
     private val settings = service<ApplicationSettings>()
     private val updatePublisher = ApplicationManager
         .getApplication()
         .messageBus
         .syncPublisher(ApplicationSettingsNotifications.MessageTopic)
 
+    // somehow the table automatically updates settings.filePaths when the user uses drag&drop
+    // to change the file order. i have no idea how this works. if someone knows, please tell me!
     private val tableModel = ListTableModel(
         arrayOf(
             object : ColumnInfo<String, String>("File") {
@@ -40,7 +44,9 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
             }
         ),
         settings.filePaths,
-    )
+    ).apply {
+        addTableModelListener { updatePublisher.onSettingsUpdated() }
+    }
 
     private val table = TableView(tableModel).apply {
         setShowColumns(false)
@@ -76,7 +82,7 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
     }
 
     private fun withSelectedIndex(action: (Int) -> Unit) {
-        val index = table.selectedColumn
+        val index = table.selectedRow
         if (index >= 0) action(index)
     }
 
@@ -86,7 +92,6 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
         if (newData != oldData) {
             settings.filePaths = newData
             tableModel.items = newData
-            updatePublisher.onSettingsUpdated()
         }
     }
 
@@ -116,9 +121,9 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
 
     private fun move(amount: Int) {
         withSelectedIndex { sourceIndex ->
+            val targetIndex = sourceIndex + amount
+            if (targetIndex !in tableModel.items.indices) return@withSelectedIndex
             changeSettings {
-                val targetIndex = sourceIndex + amount
-                if (targetIndex !in it.indices) return@changeSettings it
                 val source = it[sourceIndex]
                 val target = it[targetIndex]
                 it.mapIndexed { i, s ->
@@ -129,13 +134,16 @@ class ApplicationSettingsConfigurable : BoundConfigurable("Important Files") {
                     }
                 }
             }
+            table.setRowSelectionInterval(targetIndex, targetIndex)
         }
     }
 
     override fun createPanel(): DialogPanel = panel {
         row {
+            resizableRow()
             cell(tableContainer)
                 .align(Align.FILL)
+                .resizableColumn()
         }
     }
 }

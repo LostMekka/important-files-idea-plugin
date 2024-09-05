@@ -44,6 +44,16 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    v0.0.5
+    <ul>
+    <li>Support for IDEA 2024.2</li>
+    <li>The configured order of the files is now correctly reflected in the project view node</li>
+    <li>Settings page: The file table now correctly supports ordering (move selected file up/down as well as drag&drop)</li>
+    <li>Settings page: The file table automatically resizes with the settings window</li>
+    </ul>
+    <br>
+    <br>
+
     v0.0.4
     <ul>
     <li>Support for IDEA 2024.1 and (hopefully) beyond. IDE updates should no longer break the plugin, unless the new IDE version changed something big.</li>

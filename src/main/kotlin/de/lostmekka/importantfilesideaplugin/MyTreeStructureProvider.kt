@@ -12,6 +12,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ex.ProjectEx
 import com.intellij.openapi.vfs.LocalFileSystem
+import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 
 class MyTreeStructureProvider(
@@ -30,16 +31,16 @@ class MyTreeStructureProvider(
     override fun modify(
         parent: AbstractTreeNode<*>,
         children: MutableCollection<AbstractTreeNode<*>>,
-        settings: ViewSettings?
+        settings: ViewSettings?,
     ): MutableCollection<AbstractTreeNode<*>> {
         if (parent.value is ProjectEx) {
-            val fileChildren = appSettings.filePaths.mapNotNull {
-                val virtualFile = localFileSystem.findFileByPath(it)
+            val fileChildren = appSettings.filePaths.mapIndexedNotNull { index, filePath ->
+                val virtualFile = localFileSystem.findFileByPath(filePath)
                 if (virtualFile != null) {
                     val psiFile = psiManager.findFile(virtualFile)
                     if (psiFile != null) {
                         // Here we're directly adding PsiFileNode inside the "ImportantFile" node
-                        PsiFileNode(project, psiFile, settings)
+                        WeightedPsiFileNode(project, psiFile, settings, index)
                     } else null
                 } else null
             }
@@ -52,6 +53,15 @@ class MyTreeStructureProvider(
     override fun onSettingsUpdated() {
         ProjectView.getInstance(project).refresh()
     }
+}
+
+class WeightedPsiFileNode(
+    project: Project,
+    psiFile: PsiFile,
+    settings: ViewSettings?,
+    private val weight: Int
+) : PsiFileNode(project, psiFile, settings) {
+    override fun getWeight(): Int = weight
 }
 
 class ImportantFilesNode(

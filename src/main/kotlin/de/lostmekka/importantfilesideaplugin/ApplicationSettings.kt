@@ -3,7 +3,6 @@ package de.lostmekka.importantfilesideaplugin
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import com.intellij.util.messages.Topic
 import com.intellij.util.xmlb.XmlSerializerUtil
 
 @State(
@@ -25,7 +24,7 @@ class ApplicationSettings : PersistentStateComponent<ApplicationSettings?> {
     }
 
     fun registerListener(listener: ChangeListener) {
-        listeners = listeners.plus(listener)
+        listeners += listener
     }
 
     private fun notifyListeners() {
